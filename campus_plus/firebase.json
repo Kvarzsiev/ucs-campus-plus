@@ -1,0 +1,26 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "campusplus-e584d",
+          "appId": "1:974117334441:android:c2c62c8c5517a544afa8b8",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "campusplus-e584d",
+          "configurations": {
+            "android": "1:974117334441:android:c2c62c8c5517a544afa8b8",
+            "ios": "1:974117334441:ios:4c67b1357213f63eafa8b8",
+            "macos": "1:974117334441:ios:4c67b1357213f63eafa8b8",
+            "web": "1:974117334441:web:6ff977105dc3b4feafa8b8",
+            "windows": "1:974117334441:web:58e6b34729afda6aafa8b8"
+          }
+        }
+      }
+    }
+  }
+}
+
