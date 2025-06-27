@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:campus_plus/models/enquete_model.dart';
 import 'package:campus_plus/models/opcao_model.dart';
 import 'package:flutter/material.dart';
@@ -118,6 +120,8 @@ class _CriarEnqueteViewState extends State<CriarEnqueteView> {
         _endTime!.minute,
       );
 
+      inspect(options);
+
       try {
         await Enquete(
           pergunta: question,
@@ -134,6 +138,7 @@ class _CriarEnqueteViewState extends State<CriarEnqueteView> {
           clear();
         }
       } on FormatException catch (exception) {
+        inspect(exception);
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -248,81 +253,9 @@ class _CriarEnqueteViewState extends State<CriarEnqueteView> {
             const SizedBox(height: 16),
             Row(
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Início'),
-                      const SizedBox(height: 8),
-                      GestureDetector(
-                        onTap: () => _selectDateTime(context, isStart: true),
-                        child: AbsorbPointer(
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              hintText: _formatDateTime(_startDate, _startTime),
-                              border: const OutlineInputBorder(),
-                              suffixIcon: const Icon(Icons.calendar_today),
-                            ),
-                            validator: (value) {
-                              if (_startDate == null || _startTime == null) {
-                                return 'Defina a data e hora de início.';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                _inputData(context, isStart: true),
                 const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Fim'),
-                      const SizedBox(height: 8),
-                      GestureDetector(
-                        onTap: () => _selectDateTime(context, isStart: false),
-                        child: AbsorbPointer(
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              hintText: _formatDateTime(_endDate, _endTime),
-                              border: const OutlineInputBorder(),
-                              suffixIcon: const Icon(Icons.calendar_today),
-                            ),
-                            validator: (value) {
-                              if (_endDate == null || _endTime == null) {
-                                return 'Defina a data e hora de fim.';
-                              }
-                              if (_startDate != null && _startTime != null) {
-                                final start = DateTime(
-                                  _startDate!.year,
-                                  _startDate!.month,
-                                  _startDate!.day,
-                                  _startTime!.hour,
-                                  _startTime!.minute,
-                                );
-                                final end = DateTime(
-                                  _endDate!.year,
-                                  _endDate!.month,
-                                  _endDate!.day,
-                                  _endTime!.hour,
-                                  _endTime!.minute,
-                                );
-                                if (end.isBefore(start) ||
-                                    end.isAtSameMomentAs(start)) {
-                                  return 'O fim deve ser após o início.';
-                                }
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                _inputData(context, isStart: false),
               ],
             ),
             const SizedBox(height: 32),
@@ -338,6 +271,45 @@ class _CriarEnqueteViewState extends State<CriarEnqueteView> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Expanded _inputData(BuildContext context, {required bool isStart}) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(isStart ? 'Início' : 'Fim'),
+          const SizedBox(height: 8),
+          GestureDetector(
+            onTap: () => _selectDateTime(context, isStart: isStart),
+            child: AbsorbPointer(
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText:
+                      isStart
+                          ? _formatDateTime(_startDate, _startTime)
+                          : _formatDateTime(_endDate, _endTime),
+                  border: const OutlineInputBorder(),
+                  suffixIcon: const Icon(Icons.calendar_today),
+                ),
+                validator: (value) {
+                  if (isStart) {
+                    if (_startDate == null || _startTime == null) {
+                      return 'Defina a data e hora de início.';
+                    }
+                  } else {
+                    if (_endDate == null || _endTime == null) {
+                      return 'Defina a data e hora de fim.';
+                    }
+                  }
+                  return null;
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

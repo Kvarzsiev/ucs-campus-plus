@@ -1,0 +1,17 @@
+@startuml
+actor Administrativo
+participant Enquete
+participant EnqueteService
+
+Administrativo -> Enquete : criarEnquete(pergunta, opcoes, dataInicio, dataFim)
+Enquete -> EnqueteService : validarPeriodo(inicio, termino)
+
+alt Datas válidas
+    EnqueteService -> Enquete : periodoValido()
+    Administrativo -> Enquete : publicarEnquete()
+    Enquete -> EnqueteService : salvarEnquete(pergunta, opcoes, inicio, termino)
+else Datas inválidas
+    EnqueteService -> Enquete : periodoInvalido()
+    Enquete -> Administrativo : exibirMensagemErro("Datas inválidas. Verifique o período definido.")
+end
+@enduml

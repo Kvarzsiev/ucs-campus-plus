@@ -1,0 +1,90 @@
+@startuml
+skinparam class {
+  BackgroundColor #F0F4C3
+  BorderColor #9E9D24
+  ArrowColor #616161
+  FontSize 12
+}
+
+' Classes principais
+class Usuario {
+  +email: String
+  +senha: String
+  +nome: String
+  +perfil: Perfil
+}
+
+class Perfil {
+  +nome: String
+  +descricao: String
+  +permissoes: List<String>
+}
+
+class Notificacao {
+  +titulo: String
+  +mensagem: String
+  +destinatarios: List<Usuario>
+}
+
+class Enquete {
+  +pergunta: String
+  +dataInicio: DateTime
+  +dataFim: DateTime
+  +opcoes: List<Opcao>
+}
+
+class Opcao {
+  +descricao: String
+  +respostas: List<String>
+  +selecionada: Boolean [0..1]
+}
+
+class Evento {
+  +titulo: String
+  +descricao: String
+  +dataHora: DateTime
+  +tipo: TipoEvento
+  +visivelPara: List<Perfil>
+}
+
+enum TipoEvento {
+  SOCIAL
+  ACADEMICO
+  INSTITUCIONAL
+}
+
+class Documento {
+  +tipo: TipoDocumento
+  +solicitante: Usuario
+  +arquivoPDF: String
+}
+
+enum TipoDocumento {
+  HISTORICO
+  DECLARACAO
+  BOLETO
+}
+
+class Mensagem {
+  +remetente: Usuario
+  +destinatario: Usuario
+  +conteudo: String
+  +dataEnvio: DateTime
+}
+
+class Chat {
+  +participantes: List<Usuario>
+  +mensagens: List<Mensagem>
+}
+
+' Relacionamentos
+Usuario "1" -- "0..*" Notificacao : recebe
+Usuario "1" -- "0..*" Enquete : participa
+Enquete "1" -- "2..*" Opcao
+Usuario "1" -- "0..*" Evento : pode visualizar
+Usuario "1" -- "0..*" Documento : solicita
+Chat "0..*" -- "2..*" Usuario : participantes
+Chat "1" -- "*" Mensagem
+Usuario "1" -- "*" Mensagem : envia/recebe
+
+@enduml

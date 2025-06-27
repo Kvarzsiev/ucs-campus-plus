@@ -17,7 +17,7 @@ class _HomeViewState extends State<HomeView> {
 
   // Lista de títulos para a AppBar, correspondendo a cada aba.
   static const List<String> _appBarTitles = <String>[
-    'Home',
+    'Campus+',
     'Gerar Enquete',
     'Responder Enquete',
     'Meu Perfil',
@@ -36,7 +36,7 @@ class _HomeViewState extends State<HomeView> {
         unselectedItemColor: Colors.blueGrey,
         // Itens (abas) da barra de navegação.
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Campus+'),
           BottomNavigationBarItem(icon: Icon(Icons.add_chart), label: 'Gerar'),
           BottomNavigationBarItem(
             icon: Icon(Icons.question_answer_outlined),

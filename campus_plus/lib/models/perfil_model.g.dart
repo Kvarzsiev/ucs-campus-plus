@@ -1,17 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'permissao_model.dart';
+part of 'perfil_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Permissao _$PermissaoFromJson(Map<String, dynamic> json) => Permissao(
+Perfil _$PerfilFromJson(Map<String, dynamic> json) => Perfil(
+  id: json['id'] as String?,
   nome: json['nome'] as String,
   descricao: json['descricao'] as String,
+  permissoes:
+      (json['permissoes'] as List<dynamic>).map((e) => e as String).toList(),
 );
 
-Map<String, dynamic> _$PermissaoToJson(Permissao instance) => <String, dynamic>{
+Map<String, dynamic> _$PerfilToJson(Perfil instance) => <String, dynamic>{
+  'id': instance.id,
   'nome': instance.nome,
   'descricao': instance.descricao,
+  'permissoes': instance.permissoes,
 };

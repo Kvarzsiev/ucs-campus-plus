@@ -1,0 +1,120 @@
+@startuml
+skinparam class {
+  BackgroundColor #F0F4C3
+  BorderColor #9E9D24
+  ArrowColor #616161
+  FontSize 12
+}
+
+' Classes principais
+class FirebaseAuth.User {
+  +uid: String
+  +email: String
+  +emailVerified: Boolean
+  +displayName: String
+  +signIn(): Boolean
+  +logIn(): Boolean
+  +delete(): void
+  +sendEmailVerification(): void
+  +updatePassword(): void
+}
+
+class Usuario {
+  +uid: String
+  +perfil: Perfil
+}
+
+class Notificacao {
+  +titulo: String
+  +mensagem: String
+  +destinatarios: List<Usuario>
+  +enviar(): void
+}
+
+class Enquete {
+  +pergunta: String
+  +opcoes: List<Opcao>
+  +dataInicio: DateTime
+  +dataFim: DateTime
+}
+
+class Opcao {
+  +descricao: String
+  +respostas: List<String>
+  +selecionada: Boolean [0..1]
+}
+
+class Evento {
+  +titulo: String
+  +descricao: String
+  +dataHora: DateTime
+  +tipo: TipoEvento
+  +visivelPara: List<Perfil>
+}
+
+enum TipoEvento {
+  SOCIAL
+  ACADEMICO
+  INSTITUCIONAL
+}
+
+class Documento {
+  +tipo: TipoDocumento
+  +solicitante: Usuario
+  +arquivoPDF: String
+  +gerar(): void
+}
+
+enum TipoDocumento {
+  HISTORICO
+  DECLARACAO
+  BOLETO
+}
+
+class Mensagem {
+  +remetente: Usuario
+  +destinatario: Usuario
+  +conteudo: String
+  +dataEnvio: DateTime
+}
+
+class Chat {
+  +participantes: List<Usuario>
+  +mensagens: List<Mensagem>
+  +enviarMensagem(mensagem: Mensagem): void
+}
+
+class Perfil {
+  +nome: String
+  +descricao: String
+  +permissoes: List<String>
+}
+
+' Services
+class EnqueteService {
+  +validarPeriodo(enquete: Enquete): void
+  +salvarEnquete(enquete: Enquete): void
+  +carregarEnquetes(): List<Enquete>
+  +registrarResposta(enqueteId: String, opcaoId:String): void
+}
+
+class UsuarioService {
+  +criarUsuario(usuario: FirebaseAuth.User): void
+  +retornaIdDoUsuarioAtual(): String
+}
+
+' Relacionamentos
+Usuario "1" -- "1" FirebaseAuth.User : possui
+Usuario "1" -- "0..*" Notificacao : recebe
+Usuario "1" -- "0..*" Enquete : participa
+Enquete "1" -- "2..*" Opcao
+Usuario "1" -- "0..*" Evento : pode visualizar
+Usuario "1" -- "0..*" Documento : solicita
+Chat "0..*" -- "2..*" Usuario : participantes
+Chat "1" -- "*" Mensagem : possui
+Usuario "1" -- "*" Mensagem : envia/recebe
+Usuario "1..*" -- "1" Perfil : possui
+EnqueteService ..> Enquete : depende de
+UsuarioService ..> Usuario : depende de
+
+@enduml

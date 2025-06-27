@@ -8,8 +8,8 @@ part of 'enquete_model.dart';
 
 Enquete _$EnqueteFromJson(Map<String, dynamic> json) => Enquete(
   pergunta: json['pergunta'] as String,
-  dataInicio: DateTime.parse(json['dataInicio'] as String),
-  dataFim: DateTime.parse(json['dataFim'] as String),
+  dataInicio: Enquete.dateTimeFromJson((json['dataInicio'] as num).toInt()),
+  dataFim: Enquete.dateTimeFromJson((json['dataFim'] as num).toInt()),
   id: json['id'] as String?,
   opcoes:
       (json['opcoes'] as List<dynamic>?)
@@ -19,6 +19,6 @@ Enquete _$EnqueteFromJson(Map<String, dynamic> json) => Enquete(
 
 Map<String, dynamic> _$EnqueteToJson(Enquete instance) => <String, dynamic>{
   'pergunta': instance.pergunta,
-  'dataInicio': instance.dataInicio.toIso8601String(),
-  'dataFim': instance.dataFim.toIso8601String(),
+  'dataInicio': Enquete.dateTimeToJson(instance.dataInicio),
+  'dataFim': Enquete.dateTimeToJson(instance.dataFim),
 };

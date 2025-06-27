@@ -7,12 +7,14 @@ part 'enquete_model.g.dart';
 @JsonSerializable()
 class Enquete {
   final String pergunta;
+  @JsonKey(toJson: dateTimeToJson, fromJson: dateTimeFromJson)
   final DateTime dataInicio;
+  @JsonKey(toJson: dateTimeToJson, fromJson: dateTimeFromJson)
   final DateTime dataFim;
   @JsonKey(includeToJson: false)
   final String? id;
   @JsonKey(includeToJson: false)
-  final List<Opcao>? opcoes;
+  List<Opcao>? opcoes;
 
   Enquete({
     required this.pergunta,
@@ -25,6 +27,10 @@ class Enquete {
   factory Enquete.fromJson(Map<String, dynamic> json) =>
       _$EnqueteFromJson(json);
   Map<String, dynamic> toJson() => _$EnqueteToJson(this);
+
+  static int dateTimeToJson(DateTime date) => date.millisecondsSinceEpoch;
+  static DateTime dateTimeFromJson(int millisecondsSinceEpoch) =>
+      DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
 
   Future<void> criarEnquete() async {
     await EnqueteService().validarPeriodo(this);

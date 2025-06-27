@@ -1,4 +1,5 @@
 import 'package:campus_plus/config/firebase_options.dart';
+import 'package:campus_plus/services/usuario_service.dart';
 import 'package:campus_plus/views/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
@@ -34,9 +35,8 @@ class CampusPlus extends StatelessWidget {
           return SignInScreen(
             providers: providers,
             actions: [
-              AuthStateChangeAction<UserCreated>((context, state) {
-                // Put any new user logic here
-                onSignedIn(context);
+              AuthStateChangeAction<UserCreated>((context, state) async {
+                await onSignedIn(context);
               }),
               AuthStateChangeAction<SignedIn>((context, state) {
                 onSignedIn(context);
@@ -82,7 +82,9 @@ class CampusPlus extends StatelessWidget {
     );
   }
 
-  void onSignedIn(BuildContext context) {
-    // Navigator.pushReplacementNamed(context, '/home');
+  Future<void> onSignedIn(BuildContext context) async {
+    await UsuarioService().criarUsuario(
+      auth.FirebaseAuth.instance.currentUser!,
+    );
   }
 }

@@ -1,0 +1,21 @@
+@startuml
+actor Usuário
+participant TelaLogin
+participant AuthenticationService
+participant Sistema
+participant TelaRedefinicaoSenha
+
+Usuário -> TelaLogin : login(email, senha)
+TelaLogin -> AuthenticationService : verificarCredenciais(email, senha)
+AuthenticationService -> Sistema : consultarUsuario(email)
+Sistema --> AuthenticationService : dadosUsuario
+alt Credenciais válidas
+    AuthenticationService -> TelaLogin : autenticaçãoSucesso()
+    TelaLogin -> Sistema : redirecionarParaPaginaInicial()
+else Credenciais inválidas
+    AuthenticationService -> TelaLogin : autenticaçãoFalhou()
+    TelaLogin -> Usuário : exibirMensagemErro("Credenciais inválidas. Redefinir senha?")
+    Usuário -> TelaLogin : redefinirSenha()
+    TelaLogin -> TelaRedefinicaoSenha : redirecionarParaRedefinicao()
+end
+@enduml
