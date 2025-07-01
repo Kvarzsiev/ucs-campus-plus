@@ -4,6 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'enquete_model.g.dart';
 
+// Enquete está presente tanto no diagrama de classes quanto no de projeto
 @JsonSerializable()
 class Enquete {
   final String pergunta;

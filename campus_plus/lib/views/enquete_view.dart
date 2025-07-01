@@ -120,8 +120,6 @@ class _CriarEnqueteViewState extends State<CriarEnqueteView> {
         _endTime!.minute,
       );
 
-      inspect(options);
-
       try {
         await Enquete(
           pergunta: question,

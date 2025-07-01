@@ -49,16 +49,23 @@ class _ResponderEnqueteViewState extends State<ResponderEnqueteView> {
                   });
                 },
                 style: ButtonStyle(
-                  backgroundColor:
-                      _answerMode
-                          ? WidgetStatePropertyAll(Colors.indigo)
-                          : null,
-                  foregroundColor:
-                      _answerMode ? WidgetStatePropertyAll(Colors.white) : null,
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(side: BorderSide.none),
+                  ),
                 ),
-                child: Text(
-                  'Responder Enquetes',
-                  style: TextStyle(fontSize: 17),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.indigo,
+                        width: _answerMode ? 2 : 0,
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    'Responder Enquetes',
+                    style: TextStyle(fontSize: 17),
+                  ),
                 ),
               ),
               TextButton(
@@ -71,18 +78,23 @@ class _ResponderEnqueteViewState extends State<ResponderEnqueteView> {
                   });
                 },
                 style: ButtonStyle(
-                  backgroundColor:
-                      !_answerMode
-                          ? WidgetStatePropertyAll(Colors.indigo)
-                          : null,
-                  foregroundColor:
-                      !_answerMode
-                          ? WidgetStatePropertyAll(Colors.white)
-                          : null,
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(side: BorderSide.none),
+                  ),
                 ),
-                child: Text(
-                  'Consultar respostas',
-                  style: TextStyle(fontSize: 17),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.indigo,
+                        width: !_answerMode ? 2 : 0,
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    'Consultar respostas',
+                    style: TextStyle(fontSize: 17),
+                  ),
                 ),
               ),
             ],

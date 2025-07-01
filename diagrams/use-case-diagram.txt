@@ -1,0 +1,37 @@
+@startuml
+left to right direction
+skinparam actorStyle awesome
+
+actor Aluno
+actor "Administrativo" as Administrativo
+
+rectangle "Sistema Campus+" {
+
+  (UC01 – Visualizar calendário de eventos) as UC01
+  (UC02 – Enviar Notificações Push) as UC02
+  (UC03 – Criar Enquete) as UC03 #e2fbe5
+  (UC04 – Solicitar Documento Acadêmico) as UC04
+  (UC05 – Comunicação via Chat Interno) as UC05
+  (UC06 – Realizar Login Seguro) as UC06 #e2fbe5
+  (UC07 – Responder Enquete) as UC07 #e2fbe5
+  (UC08 – Consultar Resultados das Enquetes) as UC08 #e2fbe5
+  (UC09 – Gerenciar Permissões Administrativas) as UC09
+  (UC10 – Configurar Respostas Automáticas) as UC10
+  (UC11 – Visualizar Matérias e Conteúdos) as UC11
+}
+
+Aluno --> UC01
+Aluno --> UC04
+Aluno --> UC05
+Aluno --> UC06
+Aluno --> UC07
+Aluno --> UC11
+Administrativo --> UC02
+Administrativo --> UC03
+Administrativo --> UC05
+Administrativo --> UC06
+Administrativo --> UC08
+Administrativo --> UC09
+Administrativo --> UC10
+
+@enduml

@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'opcao_model.g.dart';
 
+// Opção está presente tanto no diagrama de classes quanto no de projeto
 @JsonSerializable()
 class Opcao {
   final String descricao;

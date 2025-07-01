@@ -2,6 +2,7 @@ import 'package:campus_plus/models/usuario_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+// UsuarioService foi diagramado no diagrama de projeto
 class UsuarioService {
   // private static instance of the class
   static final UsuarioService _instance = UsuarioService._internal();

@@ -5,14 +5,13 @@ import 'package:campus_plus/models/opcao_model.dart';
 import 'package:campus_plus/services/usuario_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// EnqueteService foi diagramado no diagrama de projeto, além de aparecer com todos os métodos abaixo
+// no diagrama de sequências do caso de uso 03
 class EnqueteService {
-  // private static instance of the class
   static final EnqueteService _instance = EnqueteService._internal();
 
-  // Private constructor to prevent external instantiation
   EnqueteService._internal();
 
-  // Factory constructor to return the same instance
   factory EnqueteService() {
     return _instance;
   }
@@ -51,7 +50,6 @@ class EnqueteService {
   Future<List<Enquete>> carregarEnquetes({
     required bool consultaResultados,
   }) async {
-    print('1');
     final hoje = DateTime.now().millisecondsSinceEpoch;
     final enquetesSnap =
         consultaResultados
@@ -61,7 +59,6 @@ class EnqueteService {
                 .where('dataInicio', isLessThanOrEqualTo: hoje)
                 .where('dataFim', isGreaterThanOrEqualTo: hoje)
                 .get();
-    print('2');
 
     List<Enquete> enquetes = [];
 
@@ -72,7 +69,6 @@ class EnqueteService {
               .doc(enqueteDoc.id)
               .collection('opcao')
               .get();
-      print('3');
 
       try {
         List<Opcao> opcoes = [];
@@ -101,7 +97,6 @@ class EnqueteService {
                       '/usuarios/${UsuarioService().retornaIdDoUsuarioAtual()}',
                 )
                 .get();
-        print('5');
 
         if (opcoesQuery.docs.isNotEmpty && opcoesQuery.docs.first.exists) {
           final opcaoSelecionada = opcoesQuery.docs.first;
@@ -115,10 +110,7 @@ class EnqueteService {
       } catch (err) {
         inspect(err);
       }
-      print('4');
     }
-    print('ENQUETES ');
-    print('6');
 
     return enquetes;
   }

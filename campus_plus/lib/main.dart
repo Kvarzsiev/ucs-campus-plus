@@ -9,6 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
+// Arquivo Main, presente no diagrama de sequências do caso de uso 06
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -26,7 +27,7 @@ class CampusPlus extends StatelessWidget {
     return MaterialApp(
       title: 'Campus+',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
       ),
       initialRoute:
           auth.FirebaseAuth.instance.currentUser == null ? '/sign-in' : '/home',
@@ -35,20 +36,19 @@ class CampusPlus extends StatelessWidget {
           return SignInScreen(
             providers: providers,
             actions: [
+              // Troca de estados presente no diagrama de sequência do caso de uso 06
               AuthStateChangeAction<UserCreated>((context, state) async {
-                await onSignedIn(context);
+                await novoUsuario(
+                  context,
+                  auth.FirebaseAuth.instance.currentUser!,
+                );
               }),
-              AuthStateChangeAction<SignedIn>((context, state) {
-                onSignedIn(context);
+              // Troca de estados presente no diagrama de sequência do caso de uso 06
+              AuthStateChangeAction<SignedIn>((context, state) async {
+                await autenticado(context);
               }),
               AuthStateChangeAction<AuthFailed>((context, state) {
-                const snackBar = SnackBar(
-                  content: Text('Credenciais inválidas.'),
-                );
-
-                // Find the ScaffoldMessenger in the widget tree
-                // and use it to show a SnackBar.
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                autenticacaoFalhou(context);
               }),
             ],
           );
@@ -82,9 +82,25 @@ class CampusPlus extends StatelessWidget {
     );
   }
 
-  Future<void> onSignedIn(BuildContext context) async {
-    await UsuarioService().criarUsuario(
-      auth.FirebaseAuth.instance.currentUser!,
-    );
+  // Métodos presentes no diagrama de sequências do caso de uso 06
+  Future<void> novoUsuario(
+    BuildContext context,
+    auth.User usuarioFirebase,
+  ) async {
+    await UsuarioService().criarUsuario(usuarioFirebase);
+  }
+
+  // Métodos presentes no diagrama de sequências do caso de uso 06
+  Future<void> autenticado(BuildContext context) async {
+    await Navigator.pushReplacementNamed(context, '/home');
+  }
+
+  // Métodos presentes no diagrama de sequências do caso de uso 06
+  void autenticacaoFalhou(BuildContext context) {
+    const snackBar = SnackBar(content: Text('Credenciais inválidas.'));
+
+    // Find the ScaffoldMessenger in the widget tree
+    // and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

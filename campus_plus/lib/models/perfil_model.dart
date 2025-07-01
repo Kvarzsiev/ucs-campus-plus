@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'perfil_model.g.dart';
 
+// Perfil está presente tanto no diagrama de classes quanto no de projeto
 @JsonSerializable()
 class Perfil {
   final String? id;

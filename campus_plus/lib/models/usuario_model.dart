@@ -3,6 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'usuario_model.g.dart';
 
+// Usuário está presente tanto no diagrama de classes quanto no de projeto
 @JsonSerializable()
 class Usuario {
   final String? id;
