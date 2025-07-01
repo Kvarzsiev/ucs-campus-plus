@@ -8,6 +8,10 @@ As this is a project meant to represent only the first cicle of development, the
 
 The diagrams used for this project were made with PlantUML software.
 
+### Class Diagram
+
+[Class Diagram UML Code](./diagrams/class-diagram.txt)
+
 ### Project Diagram
 
 [Project Diagram UML Code](./diagrams/project-diagram.txt)

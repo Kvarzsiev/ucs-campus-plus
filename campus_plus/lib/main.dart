@@ -85,6 +85,7 @@ class CampusPlus extends StatelessWidget {
   // Métodos presentes no diagrama de sequências do caso de uso 06
   Future<void> novoUsuario(
     BuildContext context,
+    // Usuário do pacote Firebase Auth
     auth.User usuarioFirebase,
   ) async {
     await UsuarioService().criarUsuario(usuarioFirebase);
