@@ -86,5 +86,6 @@ Usuario "1" -- "0..*" Documento : solicita
 Chat "0..*" -- "2..*" Usuario : participantes
 Chat "1" -- "*" Mensagem
 Usuario "1" -- "*" Mensagem : envia/recebe
+Usuario "0.." -- "1" Perfil : possui
 
 @enduml
